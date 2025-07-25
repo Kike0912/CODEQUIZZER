@@ -75,7 +75,6 @@ class UserViewModel : ViewModel() {
         _username.value = name
     }
 }
-
 # Screens UI
 
 - **LoginScreen:**  
@@ -117,5 +116,3 @@ Bienvenidas mejoras en:
 - Mejoras en UX/UI y accesibilidad.  
 - Gestión más avanzada de sesiones y almacenamiento seguro.  
 - Integración con bases de datos locales para historial de quizzes.
-
-
