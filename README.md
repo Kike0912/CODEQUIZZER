@@ -46,3 +46,33 @@ com.example.login
 ├── viewmodel
 │   └── UserViewModel.kt                 # ViewModel para manejo del estado del usuario
 └── MainActivity.kt                      # Entry point y configuración NavHost
+
+---
+
+## 📖 Flujo de Usuario
+
+1.  **Pantalla Login:** El usuario ingresa su email y contraseña. Se valida vía API REST. En caso de éxito, se guarda el token y se navega a la pantalla principal.
+2.  **Pantalla Registro:** Permite crear una cuenta nueva con campos validados y registro en backend.
+3.  **Pantalla Welcome:** Muestra saludo personalizado con el email de usuario, y las 5 categorías de quizzes disponibles.
+4.  **Pantallas de Categorías:** Cada categoría contiene preguntas tipo quiz para poner a prueba conocimientos.
+5.  **Cerrar sesión:** Desde la pantalla principal, el usuario puede cerrar sesión limpiando el token y regresando a login.
+
+---
+
+## 🧩 Componentes Clave
+
+### ViewModel: `UserViewModel`
+
+- Contiene un `MutableStateFlow` para el nombre de usuario (email).
+- Provee métodos para actualizar el estado y compartirlo entre pantallas.
+
+```kotlin
+class UserViewModel : ViewModel() {
+    private val _username = MutableStateFlow("")
+    val username: StateFlow<String> = _username
+
+    fun setUsername(name: String) {
+        _username.value = name
+    }
+}
+
