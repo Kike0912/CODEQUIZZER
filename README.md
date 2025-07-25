@@ -26,3 +26,23 @@ La app ofrece cinco categorías de quizzes educativos para fortalecer conocimien
 ---
 
 ## 📂 Estructura del Proyecto
+com.example.login
+├── data
+│   ├── api
+│   │   └── AuthApiService.kt           # Definición de endpoints para login/registro
+│   ├── models
+│   │   └── AuthModels.kt                # Clases de datos: LoginRequest, LoginResponse, ErrorMessage
+│   └── remote
+│       └── RetrofitClient.kt            # Configuración Retrofit
+├── ui
+│   └── screen
+│       ├── LoginScreen.kt               # Pantalla de login con manejo de errores y navegación
+│       ├── RegistrationScreen.kt       # Pantalla de registro
+│       ├── WelcomeScreen.kt            # Pantalla principal con categorías y logout
+│       ├── Categoria1.kt               # Pantallas de quizzes por categoría (1 a 5)
+│       └── ...
+├── utils
+│   └── TokenManager.kt                  # Almacenamiento seguro del token JWT
+├── viewmodel
+│   └── UserViewModel.kt                 # ViewModel para manejo del estado del usuario
+└── MainActivity.kt                      # Entry point y configuración NavHost
