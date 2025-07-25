@@ -76,3 +76,46 @@ class UserViewModel : ViewModel() {
     }
 }
 
+# Screens UI
+
+- **LoginScreen:**  
+  Formulario con validación y manejo de errores, llama a la API, guarda token y actualiza ViewModel.
+
+- **WelcomeScreen:**  
+  Muestra nombre de usuario, categorías con animaciones, botón logout con confirmación.
+
+- **CategoriaXScreen:**  
+  Cada categoría con quizzes específicos.
+
+---
+
+## 🚀 Cómo Ejecutar
+
+1. Clona el repositorio.  
+2. Abre en Android Studio.  
+3. Configura el endpoint de la API REST en `RetrofitClient.kt`.  
+4. Ejecuta la app en un emulador o dispositivo físico.  
+5. Regístrate o inicia sesión con credenciales válidas.
+
+---
+
+## 📋 Notas Importantes
+
+- La app usa **Jetpack Compose** para UI moderna y reactiva.  
+- Se sigue el patrón **MVVM** para separar lógica de presentación.  
+- El token JWT se guarda localmente para manejar sesión.  
+- La navegación entre pantallas usa **Navigation Compose** con paso de parámetros y gestión del backstack.  
+- Se usan **coroutines** para llamadas de red asíncronas y evitar bloqueos en UI.
+
+---
+
+## 🤝 Contribuciones
+
+Bienvenidas mejoras en:
+
+- Nuevas categorías y preguntas para quizzes.  
+- Mejoras en UX/UI y accesibilidad.  
+- Gestión más avanzada de sesiones y almacenamiento seguro.  
+- Integración con bases de datos locales para historial de quizzes.
+
+
