@@ -1,9 +1,7 @@
 package com.example.login.ui.screen
 
-
 // Importaciones
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -55,12 +53,13 @@ fun RegistrationScreen(navController: NavHostController) {
 
     var registrationMessage by remember { mutableStateOf("") }
     var registrationSuccessful by remember { mutableStateOf(false) }
+    var showSuccessDialog by remember { mutableStateOf(false) }
 
     val authApiService = remember { RetrofitClient.api }
 
     LaunchedEffect(registrationSuccessful) {
         if (registrationSuccessful) {
-            registrationMessage = "Registro exitoso. Inicia sesión."
+            showSuccessDialog = true
         }
     }
 
@@ -200,8 +199,6 @@ fun RegistrationScreen(navController: NavHostController) {
 
                         withContext(Dispatchers.Main) {
                             if (response.isSuccessful) {
-                                // No necesitamos response.body()?.message aquí, ya sabemos que es exitoso.
-                                // La API devuelve una String directamente, no un objeto con campo 'message'.
                                 registrationSuccessful = true
                             } else {
                                 val errorBody = response.errorBody()?.string()
@@ -242,10 +239,10 @@ fun RegistrationScreen(navController: NavHostController) {
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        if (registrationMessage.isNotEmpty()) {
+        if (registrationMessage.isNotEmpty() && !registrationSuccessful) {
             Text(
                 text = registrationMessage,
-                color = if (registrationSuccessful) primaryColor else Color.Red,
+                color = Color.Red,
                 modifier = Modifier.align(Alignment.CenterHorizontally)
             )
         }
@@ -258,6 +255,7 @@ fun RegistrationScreen(navController: NavHostController) {
             color = Color.LightGray
         )
 
+        // Aquí el botón "¿Ya tienes cuenta? Iniciar Sesión" con ícono y estilo
         Row(
             Modifier
                 .padding(horizontal = 24.dp)
@@ -265,15 +263,42 @@ fun RegistrationScreen(navController: NavHostController) {
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center
         ) {
-            Text(
-                text = "¿Ya tienes cuenta? Iniciar Sesión",
-                color = primaryColor,
-                fontSize = 14.sp,
-                modifier = Modifier.clickable { navController.popBackStack() }
-            )
+            TextButton(
+                onClick = { navController.popBackStack() },
+                shape = RoundedCornerShape(50),
+                colors = ButtonDefaults.textButtonColors(contentColor = primaryColor)
+            ) {
+                Icon(
+                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                    contentDescription = "Volver",
+                    modifier = Modifier.size(18.dp)
+                )
+                Spacer(modifier = Modifier.width(8.dp))
+                Text(
+                    text = "¿Ya tienes cuenta? Iniciar Sesión",
+                    fontSize = 14.sp
+                )
+            }
         }
 
         Spacer(modifier = Modifier.height(24.dp))
+    }
+
+    // Diálogo éxito registro
+    if (showSuccessDialog) {
+        AlertDialog(
+            onDismissRequest = { /* No cerrar tocando fuera */ },
+            title = { Text("Registro exitoso") },
+            text = { Text("Tu cuenta ha sido creada correctamente. Pulsa el botón para iniciar sesión.") },
+            confirmButton = {
+                TextButton(onClick = {
+                    showSuccessDialog = false
+                    navController.popBackStack()
+                }) {
+                    Text("Ir a Login")
+                }
+            }
+        )
     }
 }
 
